@@ -21,7 +21,7 @@ def main():
     tmr = 0
     
     # 効果音の読み込み
-    jump_sound = pg.mixer.Sound("jump.mp3")
+    jump_sound = pg.mixer.Sound("ex05/fig/jump.mp3")
     
     while True:
         for event in pg.event.get():
