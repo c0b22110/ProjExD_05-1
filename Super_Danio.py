@@ -8,8 +8,7 @@ def main():
     clock  = pg.time.Clock()
     bg_img = pg.image.load("ex05/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex05/fig/danieru.png")
-    kk_img = pg.transform.flip(kk_img,True,False)
-    kk_imgs = pg.transform.rotozoom(kk_img,0,0.5)
+    kk_img = pg.transform.rotozoom(kk_img,0,0.5)
     bg_imgs = [bg_img,pg.transform.flip(bg_img,True, False)]*2
 
     tmr = 0
@@ -23,9 +22,9 @@ def main():
             screen.blit(bg_imgs[i], [1600*i-x, 0])
 
         if tmr % 100 <= 50:
-            screen.blit(kk_img, [300, 200])
+            screen.blit(kk_img, [200, 400])
         else:            
-            screen.blit(kk_imgs,[300,200])
+            screen.blit(kk_img,[200,400])
         pg.display.update()
         tmr += 1        
         clock.tick(100)
