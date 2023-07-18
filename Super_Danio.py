@@ -4,6 +4,7 @@ import pygame as pg
 from pygame.math import Vector2
 
 
+
 def main():
     global player_y  # player_y をグローバル変数として宣言
     pg.display.set_caption("スーパーダニエル")
@@ -20,6 +21,7 @@ def main():
     player_y = 400
     player_y_vel = 0
     jumping = False
+
     tmr = 0
 
     # 障害物クラス
@@ -93,11 +95,15 @@ def main():
                 player_y_vel = 0
                 jumping = False
 
+        
         for i in range(4):
             screen.blit(bg_imgs[i], [1600 * i - x, 0])
 
         obstacle.update()
         obstacle.check_collision()
+        screen.blit(bg_imgs[i], [1600 * i - x, 0])
+
+        
 
         if True:
             obstacle.draw()
@@ -107,8 +113,12 @@ def main():
 
         pg.display.update()
         tmr += 1
+        tmr += 1
         clock.tick(100)
 
+    # ゲームループ終了後にゲームオーバー画面を表示するなどの処理を追加することができます
+    # 以下は単純にウィンドウを閉じるだけの処理です
+    
     # ゲームループ終了後にゲームオーバー画面を表示するなどの処理を追加することができます
     # 以下は単純にウィンドウを閉じるだけの処理です
     
