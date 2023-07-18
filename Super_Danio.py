@@ -27,6 +27,9 @@ class Player:  #プレイヤークラス
                 self.image = self.invincible_image
     
     def set_invincible(self):
+        """
+        無敵機能
+        """
         if self.invincible_timer <= 0:
             self.invincible = True
             self.invincible_timer = 500
@@ -35,7 +38,10 @@ class Player:  #プレイヤークラス
             self.image = pg.transform.flip(self.image, True, False)
 
             
-def check_collision(player, enemy):  #衝突判定(通常時、無敵時の判定)
+def check_collision(player, enemy):
+    """
+    衝突判定(通常時、無敵時の判定)
+    """
     if not player.invincible:
         if player.rect.colliderect(enemy.rect):
             return True
@@ -48,7 +54,7 @@ class Enemy:
     チームメイトの方を優先する
     """
     def __init__(self):
-        self.image = pg.image.load("ex05/fig/mukimuki.png")
+        self.image = pg.image.load("ex05/fig/mukimuki.png") #確認用のため本来の敵画像とは違う
         self.image = pg.transform.rotozoom(self.image, 0, 0.5)
         self.rect = self.image.get_rect()
         self.rect.topright = (800, 400)
@@ -81,6 +87,7 @@ def main():
     """
     確認のため初期値を５００にしている
     本来は０から開始する
+    チームメイトの方を優先する
     """
     
     
