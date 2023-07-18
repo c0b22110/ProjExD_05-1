@@ -18,7 +18,7 @@ class Power:
         self.now_img = self.da_img #現在の状態
     
     def update(self):
-        if self.score >= 5 and not self.power:#スコアが５を超えたらパワーアップ
+        if self.score >= 700 and not self.power:#スコアが５を超えたらパワーアップ
             self.power_up()
         if self.score == 4: #パワーアップしたら音が鳴る
             self.sound()
