@@ -28,10 +28,11 @@ def main():
         pg.display.update()
         tmr += 1        
         clock.tick(100)
+        pg.quit()#
+        sys.exit()
 
 
 if __name__ == "__main__":
     pg.init()
     main()
-    pg.quit()
-    sys.exit()
+    
