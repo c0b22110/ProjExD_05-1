@@ -63,7 +63,7 @@ def main():
                     
 
         def draw(self):
-            screen.blit(self.image, [self.x, self.y])
+            screen.blit(self.image, [self.x, self.y]) #
 
     obstacle = Obstacle()
     
@@ -75,7 +75,7 @@ def main():
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT:
-                break
+                return
 
             
             elif event.type == pg.KEYDOWN:
