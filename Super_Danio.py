@@ -4,6 +4,9 @@ import time
 
 
 class Power:
+    """
+    スコアが一定以上を越せばパワーアップする（見た目）
+    """
 
     def __init__(self, score):
         self.score = score
@@ -12,25 +15,25 @@ class Power:
         self.da_img = pg.transform.rotozoom(self.da_img, 0, 0.5)
         self.po_img = pg.image.load("ex05/fig/power.png")
         self.po_imgs = pg.transform.rotozoom(pg.transform.flip(self.po_img, True, False), 0, 0.5)  # デフォルトのimage
-        self.now_img = self.da_img
+        self.now_img = self.da_img #現在の状態
     
     def update(self):
-        if self.score >= 5 and not self.power:
+        if self.score >= 5 and not self.power:#スコアが５を超えたらパワーアップ
             self.power_up()
-        if self.score == 4:
+        if self.score == 4: #パワーアップしたら音が鳴る
             self.sound()
 
-    def power_up(self):
+    def power_up(self): #パワーアップの状態
         self.power = True
-        self.now_img = self.po_imgs
+        self.now_img = self.po_imgs 
     
-    def draw(self, screen, x, y):
+    def draw(self, screen, x, y): #現在の状態のプレイヤーを描写
         screen.blit(self.now_img, (x, y))
 
     def sound(self):
         pg.mixer.init()
         pg.mixer.music.load("ex05/fig/power.mp3")
-        pg.mixer.music.play()
+        pg.mixer.music.play() #パワーアップサウンド
 
 def main():
     pg.display.set_caption("スーパーダニエル")
@@ -66,7 +69,7 @@ def main():
         screen.blit(score_text, (10, 10))#実行用（後で削除）
         power = Power(score)
         power.update()
-        power.draw(screen, 200, player_y)
+        power.draw(screen, 200, player_y) #パワーアップした状態を描く
         pg.display.update()
         tmr += 1        
         clock.tick(100)
