@@ -12,32 +12,31 @@ WHITE = (255, 255, 255)
 
 # ゲームの初期化
 pg.init()
-screen = pg.display.set_mode((WIDTH, HEIGHT))
-pg.display.set_caption("横スクロールジャンプゲーム")
-clock = pg.time.Clock()
-jump_sound = pg.mixer.Sound("ex05/fig/jump.mp3")  # 2. Load the "power.mp3" file into a Sound object
-
+screen = pg.display.set_mode((WIDTH, HEIGHT))# ゲーム画面の作成
+pg.display.set_caption("横スクロールジャンプゲーム")# ウィンドウのタイトル設定
+clock = pg.time.Clock()# FPSを制御するためのクロックオブジェクト
+jump_sound = pg.mixer.Sound("ex05/fig/jump.mp3") # ジャンプ音の読み込み
 
 # 背景画像の読み込み
 bg_img = pg.image.load("ex05/fig/pg_bg.jpg")
 bg_img = pg.transform.scale(bg_img, (WIDTH, HEIGHT))
-bg_imgs = [bg_img, pg.transform.flip(bg_img, True, False)] * 4
-
+bg_imgs = [bg_img, pg.transform.flip(bg_img, True, False)] * 4# 背景をループさせるための画像リスト
 score = 0
+
 
 class Player(pg.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pg.image.load("ex05/fig/danieru.png")
+        self.image = pg.image.load("ex05/fig/danieru.png") # プレイヤー画像の設定
         self.image = pg.transform.rotozoom(self.image, 0, 0.5)
         self.rect = self.image.get_rect()
-        self.rect.topleft = (200, 400)
+        self.rect.topleft = (200, 400) # プレイヤーの初期位置
         self.velocity = pg.Vector2(0, 0)
         self.gravity = 0.4
         self.jumping = False
         self.jump_count = 0  # 二段ジャンプの回数を追加
-        self.invincible = False
-        self.invincible_timer = 0
+        self.invincible = False# 無敵状態かどうかのフラグ
+        self.invincible_timer = 0  # 無敵状態の残り時間
         self.power_up_effect_active = False  # パワーアップの効果が発動中かどうか
         self.power_up_effect_duration = 300  # パワーアップの効果が持続する時間
 
@@ -45,11 +44,10 @@ class Player(pg.sprite.Sprite):
         if self.power_up_effect_active:
             self.power_up_effect_duration -= 1
             if self.power_up_effect_duration <= 0:
-                self.end_power_up_effect()
+                self.end_power_up_effect() # パワーアップ効果終了時の処理
                 
-
-        self.handle_gravity()
-        self.rect.move_ip(self.velocity)
+        self.handle_gravity() # 重力処理
+        self.rect.move_ip(self.velocity) # プレイヤーの位置更新
 
         if self.rect.top >= HEIGHT:
             self.rect.bottom = HEIGHT
@@ -60,7 +58,6 @@ class Player(pg.sprite.Sprite):
         # 無敵状態の処理
         if self.invincible:
             self.invincible_timer -= 1
-            
             if self.invincible_timer <= 0:
                 self.invincible = False
                 self.image = pg.image.load("ex05/fig/danieru.png")  # 元の画像に戻す
@@ -80,25 +77,24 @@ class Player(pg.sprite.Sprite):
             self.velocity.y = -17
             self.jumping = True
             self.jump_count += 1
-            jump_sound.play()
+            jump_sound.play() # ジャンプ音を再生
 
     def set_invincible(self):
         if not self.invincible:
             self.invincible = True
-            self.invincible_timer = 300
+            self.invincible_timer = 300 # 5秒間（60FPS基準）無敵にする
             invincible_image = pg.image.load("ex05/fig/supadanieru.png")
             invincible_image = pg.transform.rotozoom(invincible_image, 0, 0.7)
             self.image = pg.transform.flip(invincible_image, True, False)
 
     def set_power_up(self, score):
-        if not self.power_up_effect_active and score >= 100:
+        if not self.power_up_effect_active and score >= 100:  # スコアが100以上でパワーアップ発動
             self.power_up_effect_active = True
 
     def end_power_up_effect(self):
         self.power_up_effect_active = False
         self.image = pg.image.load("ex05/fig/danieru.png")  # 元の画像に戻す
         self.image = pg.transform.rotozoom(self.image, 0, 0.5)
-
 
 # コインクラス
 class Coin(pg.sprite.Sprite):
@@ -142,6 +138,7 @@ class Obstacle(pg.sprite.Sprite):
         self.rect.topleft = (WIDTH, random.randint(HEIGHT // 2, HEIGHT - 30))
         self.hitbox.topleft = (WIDTH, random.randint(HEIGHT // 2, HEIGHT - 30))  # 判定用矩形もリセットする
 
+
 def main():
     # スプライトグループ
     all_sprites = pg.sprite.Group()
@@ -165,7 +162,7 @@ def main():
                 if event.key == pg.K_SPACE:
                     player.jump()
                 elif event.key == pg.K_LSHIFT:
-                    if score >= 50:
+                    if score >= 50:  # スコアが50以上で無敵状態発動
                         score -= 50
                         player.set_invincible()
         player.set_power_up(score)
@@ -222,6 +219,7 @@ def main():
     time.sleep(2)  # 2秒間待機してから終了
     pg.quit()
     sys.exit()
+#
 
 if __name__ == "__main__":
     main()
