@@ -219,7 +219,7 @@ def main():
     time.sleep(2)  # 2秒間待機してから終了
     pg.quit()
     sys.exit()
-
+#
 
 if __name__ == "__main__":
     main()
